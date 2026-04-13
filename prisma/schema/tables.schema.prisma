@@ -1,0 +1,24 @@
+// Table Management Models
+
+enum TableStatus {
+  AVAILABLE
+  OCCUPIED
+  RESERVED
+}
+
+model Table {
+  id           String   @id @default(cuid())
+  tableNumber  Int
+  seatCount    Int
+  status       TableStatus @default(AVAILABLE)
+  restaurantId String
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  orders       Order[]
+  reservations Reservation[]
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([restaurantId, tableNumber])
+}

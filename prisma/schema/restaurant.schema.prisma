@@ -1,0 +1,34 @@
+// Restaurant Management Models
+
+model Restaurant {
+  id        String   @id @default(cuid())
+  name      String
+  owner     String
+  email     String   @unique
+  phone     String
+  address   String
+  logo      String?
+
+  // Relationships
+  settings       RestaurantSettings?
+  users          User[]
+  menuItems      MenuItem[]
+  tables         Table[]
+  staff          Staff[]
+  orders         Order[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model RestaurantSettings {
+  id           String   @id @default(cuid())
+  restaurantId String   @unique
+  restaurant   Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)
+
+  taxRate      Float    @default(8.0)
+  currency     String   @default("USD")
+
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
