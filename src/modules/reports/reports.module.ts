@@ -10,3 +10,4 @@ import { ReportsController } from './reports.controller';
   exports: [ReportsService],
 })
 
+export class ReportsModule {}
